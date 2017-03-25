@@ -12,7 +12,6 @@
 - (gdb) info b    <------- 查看断点信息。
 
 ```
-
 Num     Type           Disp Enb Address            What
 1       breakpoint     keep y   0x000000000040055c in main at test.c:16
 2       breakpoint     keep y   0x000000000040052d in func at test.c:5
