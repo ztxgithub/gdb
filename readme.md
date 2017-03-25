@@ -31,7 +31,7 @@ Num     Type           Disp Enb Address            What
 
 - (gdb) finish         <------- 当运行到函数中时，查看函数的返回值通过finish
 
-Run till exit from #0  func (n=250) at test.c:5
-0x00000000004005a0 in main () at test.c:24
-24         printf("result[1-250] = %d \n", func(250) );
+Run till exit from #0  func (n=250) at test.c:5  
+0x00000000004005a0 in main () at test.c:24  
+24         printf("result[1-250] = %d \n", func(250) );  
 **Value returned is $10 = 31125**
