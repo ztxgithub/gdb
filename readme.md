@@ -62,11 +62,14 @@
 
 ## 启动gdb
 
-- gdb <program> 
+- gdb  program
 > program 为带调试信息的可执行程序
 
-- gdb <program> core
+- gdb program core
 > core是程序core dump(异常错误)后产生的文件。
+
+- gdb program PID
+> 调试已运行的程序
 
 - gdb options(参数)
 
@@ -77,11 +80,19 @@
 
 ## gdb相关操作
 
-- (gdb) b 16     <-----设置断点，在源程序第16行处。
+### 设置断点（BreakPoint）
 
-- (gdb) b func   <-----设置断点 可以是函数名，在函数func()入口处。
+- (gdb) b 16                   <-----设置断点，在源程序第16行处。
 
-- (gdb) info b   <-----查看断点信息。
+- (gdb) b filename:linenum     <-----在源文件filename的linenum行处停住。
+
+- (gdb) b func                 <-----设置断点 可以是函数名，在函数func()入口处。
+
+- (gdb) b filename:function    <-----在源文件filename的function函数的入口处停住。
+
+- (gdb) b ... if condition     <----- ...可以是上述的参数，condition表示条件，在条件成立时停住。
+
+- (gdb) info b                 <-----查看断点信息。
 
 ```
 
@@ -92,6 +103,26 @@ Num     Type           Disp Enb Address            What
 ```
 
 - (gdb) d 1        <------- 删除1号断点
+
+
+### 设置观察点（WatchPoint）
+
+观测点用来观察某一表达式（变量）是否发生变化，如果有变化，马上停住程序
+
+- (gdb) watch expr            <-------  为表达式（变量）expr设置一个观察点。一旦表达式值有变化时，马上停住程序。
+
+- (gdb) rwatch expr           <------- 当表达式（变量）expr被读时，停住程序。
+
+- (gdb) awatch expr           <------- 当表达式（变量）的值被读或被写时，停住程序。
+
+- (gdb) info watchpoints      <------- 列出当前所设置了的所有观察点。。
+
+
+
+
+
+
+- (gdb) n          <------- 单条语句执行，next命令简写。
 
 - (gdb) n          <------- 单条语句执行，next命令简写。
 
@@ -108,4 +139,12 @@ Num     Type           Disp Enb Address            What
   24         printf("result[1-250] = %d \n", func(250) );  
   **Value returned is $10 = 31125**
   
-- (gdb) where         <------- 查看当前程序调用函数栈跟bt差不多
+- (gdb) where                            <------- 查看当前程序调用函数栈跟bt差不多
+                                        
+- (gdb) shell command                    <------- 可以在gdb界面中运行shell 命令 如：shell ls
+
+- (gdb) set args argc[1] argc[2] ....    <------- 设置程序运行时传入的参数 如：set args 10 
+
+- (gdb) path  dir                        <------- 设置程序的运行路径
+
+- (gdb) show paths                       <------- 查看程序的运行路径。
