@@ -10,7 +10,7 @@
 
 | Signal    |  Action  |  Comment                                         |
 | -------   |  :-----: |  :---------------------------------------:       |
-| SIGQUIT   |   Core   |  Quit from keyboard (ctrl + \)                   |
+| SIGQUIT   |   Core   |  Quit from keyboard (ctrl + "\")                 |
 | SIGILL    |   Core   |  Illegal Instruction                             |
 | SIGABRT   |   Core   |  Abort signal from abort(程序调用 abort() 函数)  |
 | SIGSEGV   |   Core   |  Invalid memory reference                        |
