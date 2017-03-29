@@ -24,6 +24,19 @@
 
 - 使用ulimit -c unlimited命令，开启core dump功能，并且不限制生成core dump文件的大小。如果需要限制，加数字限制即可。ulimit - c 1024
 
+- 用上面命令只会对当前的终端环境有效，如果想需要永久生效，可以修改文件 /etc/security/limits.conf文件
+
+```
+
+# /etc/security/limits.conf
+#
+#Each line describes a limit for a user in the form:
+#
+#<domain>   <type>   <item>   <value>
+    *          soft     core   unlimited
+
+```
+
 - /proc/sys/kernel/core_uses_pid可以控制core文件的文件名中是否添加pid作为扩展。文件内容为1，表示添加pid作为扩展名，生成的core文件格式为core.xxxx；为0则表示生成的core文件同一命名为core
 > echo "1" > /proc/sys/kernel/core_uses_pid
 
@@ -86,9 +99,11 @@ Num     Type           Disp Enb Address            What
 
 - (gdb) bt         <------- 查看当前程序运行到哪里，函数堆栈。
 
-- (gdb) finish         <------- 当运行到函数中时，查看函数的返回值通过finish
+- (gdb) finish     <------- 当运行到函数中时，查看函数的返回值通过finish
 
   Run till exit from #0  func (n=250) at test.c:5  
   0x00000000004005a0 in main () at test.c:24  
   24         printf("result[1-250] = %d \n", func(250) );  
   **Value returned is $10 = 31125**
+  
+- (gdb) where         <------- 查看当前程序调用函数栈跟bt差不多
