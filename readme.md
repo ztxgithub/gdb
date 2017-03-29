@@ -72,6 +72,7 @@
 > -symbols <file>  == -s <file> 从指定文件中读取符号表
 > -se <file>  从指定文件中读取符号表并将它使用在可执行文件中
 > -c <file> == -core <file> 使用该文件作为 core dump 
+> -directory <directory> == -d <directory>  加入一个源文件的搜索路径。默认搜索路径是环境变量中PATH所定义的路径
 
 ## gdb相关操作
 
