@@ -1,7 +1,38 @@
 # gdb调试
 
+## 相关知识
+
+### core dump
+
+	当程序运行时异常崩溃时，操作系统会将程序当时的内存状态记录下来，保存在一个文件中，core dump 文件可以再现程序出错时的情景。
+	
+#### 产生core dump 的信号类型
+
+| Signal    |  Action  |  Comment                                         |
+| -------   |  :-----: |  :---------------------------------------:       |
+| SIGQUIT   |   Core   |  Quit from keyboard (ctrl + \)                   |
+| SIGILL    |   Core   |  Illegal Instruction                             |
+| SIGABRT   |   Core   |  Abort signal from abort(程序调用 abort() 函数)  |
+| SIGSEGV   |   Core   |  Invalid memory reference                        |
+| SIGTRAP   |   Core   |  Trace/breakpoint trap                           |
+
+## 编译可执行程序
+
 - 编译时一定要注意加上 “-g” (将调试信息添加到可执行文件中，显示具体的函数名和变量)
 > gcc -g test.c -o test
+
+## 启动gdb
+
+- gdb <program> 
+> program 为带调试信息的可执行程序
+
+- gdb <program> core
+> core是程序core dump(异常错误)后产生的文件。
+
+- gdb options(参数)
+> -symbols <file>  == -s <file> 从指定文件中读取符号表
+> -se <file>  从指定文件中读取符号表并将它使用在可执行文件中
+> -c <file> == -core <file> 使用该文件作为 core dump 
 
 ## gdb相关操作
 
