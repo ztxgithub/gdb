@@ -16,6 +16,32 @@
 | SIGSEGV   |   Core   |  Invalid memory reference                        |
 | SIGTRAP   |   Core   |  Trace/breakpoint trap                           |
 
+在终端上按 ctrl + z 向进程发出 SIGTSTP 信号，ctrl + c 向进程发出 SIGINT 信号，kill -9 命令会发出 SIGKILL 命令
+
+#### core dump 文件生成
+
+-  在终端中输入ulimit -c 如果结果为0，说明当程序崩溃时，系统并不能生成core dump
+
+- 使用ulimit -c unlimited命令，开启core dump功能，并且不限制生成core dump文件的大小。如果需要限制，加数字限制即可。ulimit - c 1024
+
+- /proc/sys/kernel/core_uses_pid可以控制core文件的文件名中是否添加pid作为扩展。文件内容为1，表示添加pid作为扩展名，生成的core文件格式为core.xxxx；为0则表示生成的core文件同一命名为core
+> echo "1" > /proc/sys/kernel/core_uses_pid
+
+- proc/sys/kernel/core_pattern可以控制core文件保存位置和文件名格式
+> echo "/corefile/core-%e-%p-%t" > core_pattern  ( 可以将core文件统一生成到/corefile目录下，产生的文件名为core-命令名-pid-时间戳) 
+
+```
+
+%p - insert pid into filename 添加pid
+%u - insert current uid into filename 添加当前uid
+%g - insert current gid into filename 添加当前gid
+%s - insert signal that caused the coredump into the filename 添加导致产生core的信号
+%t - insert UNIX time that the coredump occurred into filename 添加core文件生成时的unix时间
+%h - insert hostname where the coredump happened into filename 添加主机名
+%e - insert coredumping executable name into filename 添加命令名
+
+```
+
 ## 编译可执行程序
 
 - 编译时一定要注意加上 “-g” (将调试信息添加到可执行文件中，显示具体的函数名和变量)
