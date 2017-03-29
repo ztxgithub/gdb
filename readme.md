@@ -10,13 +10,13 @@
 
 | Signal    |  Action  |  Comment                                         |
 | -------   |  :-----: |  :---------------------------------------:       |
-| SIGQUIT   |   Core   |  Quit from keyboard (ctrl + '\)                  |
+| SIGQUIT   |   Core   |  Quit from keyboard                              |
 | SIGILL    |   Core   |  Illegal Instruction                             |
 | SIGABRT   |   Core   |  Abort signal from abort(程序调用 abort() 函数)  |
 | SIGSEGV   |   Core   |  Invalid memory reference                        |
 | SIGTRAP   |   Core   |  Trace/breakpoint trap                           |
 
-在终端上按 ctrl + z 向进程发出 SIGTSTP 信号，ctrl + c 向进程发出 SIGINT 信号，kill -9 命令会发出 SIGKILL 命令
+在终端上按 ctrl + z 向进程发出 SIGTSTP 信号，ctrl + c 向进程发出 SIGINT 信号，kill -9 命令会发出 SIGKILL 命令, ctrl + \ 发出 SIGQUIT 命令
 
 #### core dump 文件生成
 
