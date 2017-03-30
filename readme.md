@@ -109,7 +109,7 @@ Num     Type           Disp Enb Address            What
 
 观测点用来观察某一表达式（变量）是否发生变化，如果有变化，马上停住程序,**在run之前直接设置观察点是不行的,要在运行程序之后设置watch**
 
-- (gdb) watch expr            <-------  为表达式（变量）expr设置一个观察点。一旦表达式值有变化时，马上停住程序。
+- (gdb) watch expr            <------- 为表达式（变量）expr设置一个观察点。一旦表达式值有变化时，马上停住程序。
 
 - (gdb) rwatch expr           <------- 当表达式（变量）expr被读时，停住程序。
 
@@ -119,26 +119,52 @@ Num     Type           Disp Enb Address            What
 
 ### 管理停止点
 
-- (gdb) clear                 <-------  清除所有的停止点（包括breakpoints,watchpoints）
+- (gdb) clear                                <------- 清除所有的停止点（包括breakpoints,watchpoints）
 
-- (gdb) clear filename:function       <-------  清除该函数名那一行所有的停止点（包括breakpoints,watchpoints）
+- (gdb) clear filename:function              <------- 清除该函数名那一行所有的停止点（包括breakpoints,watchpoints）
 
-- (gdb) clear filename:linenum        <-------  清除指定行的所有停止点
+- (gdb) clear filename:linenum               <------- 清除指定行的所有停止点
 
-- (gdb) disable [breakpoints] [range...]      <-------  使指定的停止点不工作，但不删除
+- (gdb) disable [breakpoints] [range...]     <------- 使指定的停止点不工作，但不删除
+
+- (gdb) enable [breakpoints] [range...]      <------- 使能指定的停止点
+
+### 查看堆栈信息
+
+- (gdb) bt                <------- 查看当前程序运行到哪里，函数堆栈。
+
+- (gdb) info locals       <------- 打印当前函数所有局部变量的值
+
+- (gdb) info args         <------- 打印当前函数传入参数的值
+
+- (gdb) f n               <------- 根据bt命令确定各个堆栈的序号，可以切换到指定的堆栈(函数中)，frame
+
+### 常用命令
+
+- (gdb) set listsize num         <------- 设置一次显示源代码的行数
+
+- (gdb) show listsize            <------- 显示一次显示源代码的行数
+
+- (gdb) dir dirname1:dirname2    <------- 加入源文件的绝对路径(可以是目录)到gdb搜索范围内 directory
+
+- (gdb) directory                <------- 清除所有的自定义的源文件搜索路径信息
+
+- (gdb) n                        <------- 单条语句执行，如果遇到函数**不进入函数**next命令简写。
+
+- (gdb) s                        <------- 单步调试，如果遇到函数**进入函数**(step)
+
+- (gdb) u                        <------- 当你厌倦了在一个循环体内单步跟踪时，退出循环体(前提是该循环内没有停止点) until
+
+- (gdb) c                        <------- 继续运行程序直到下一个断点或程序结束，continue命令简写。
+
+- (gdb) p i                      <------- 打印变量i的值，print命令简写。
+
+- (gdb) p/format i               <------- 以特定的格式打印变量i的值，例如 p/x i (以十六进制打印i)
+
+- (gdb) p *array@len             <------- 打印动态数组的内容，array首地址，len为长度。
 
 
-- (gdb) n          <------- 单条语句执行，next命令简写。
-
-- (gdb) n          <------- 单条语句执行，next命令简写。
-
-- (gdb) c          <------- 继续运行程序直到下一个断点，continue命令简写。
-
-- (gdb) p i        <------- 打印变量i的值，print命令简写。
-
-- (gdb) bt         <------- 查看当前程序运行到哪里，函数堆栈。
-
-- (gdb) finish     <------- 当运行到函数中时，查看函数的返回值通过finish
+- (gdb) finish                   <------- 当运行到函数中时，查看函数的返回值通过finish
 
   Run till exit from #0  func (n=250) at test.c:5  
   0x00000000004005a0 in main () at test.c:24  
