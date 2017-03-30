@@ -117,9 +117,15 @@ Num     Type           Disp Enb Address            What
 
 - (gdb) info watchpoints      <------- 列出当前所设置了的所有观察点。。
 
+### 管理停止点
 
+- (gdb) clear                 <-------  清除所有的停止点（包括breakpoints,watchpoints）
 
+- (gdb) clear filename:function       <-------  清除该函数名那一行所有的停止点（包括breakpoints,watchpoints）
 
+- (gdb) clear filename:linenum        <-------  清除指定行的所有停止点
+
+- (gdb) disable [breakpoints] [range...]      <-------  使指定的停止点不工作，但不删除
 
 
 - (gdb) n          <------- 单条语句执行，next命令简写。
