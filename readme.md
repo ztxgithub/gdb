@@ -80,6 +80,16 @@
 
 ## gdb相关操作
 
+### 查看源代码
+
+- (gdb) l linenum                   <-----显示程序第linenum行周围的源程序
+
+- (gdb) l function                  <-----显示函数名为function的函数的源程序
+
+- (gdb) l                           <-----显示当前行后面的源程序
+
+- (gdb) l -                         <-----显示当前行前面的源程序
+
 ### 设置断点（BreakPoint）
 
 - (gdb) b 16                   <-----设置断点，在源程序第16行处。
@@ -148,6 +158,8 @@ Num     Type           Disp Enb Address            What
 - (gdb) dir dirname1:dirname2    <------- 加入源文件的绝对路径(可以是目录)到gdb搜索范围内 directory
 
 - (gdb) directory                <------- 清除所有的自定义的源文件搜索路径信息
+
+- (gdb) r                        <------- 程序运行
 
 - (gdb) n                        <------- 单条语句执行，如果遇到函数**不进入函数**next命令简写。
 
