@@ -40,7 +40,7 @@
 - /proc/sys/kernel/core_uses_pid可以控制core文件的文件名中是否添加pid作为扩展。文件内容为1，表示添加pid作为扩展名，生成的core文件格式为core.xxxx；为0则表示生成的core文件同一命名为core
 > echo "1" > /proc/sys/kernel/core_uses_pid
 
-- proc/sys/kernel/core_pattern可以控制core文件保存位置和文件名格式
+- /proc/sys/kernel/core_pattern可以控制core文件保存位置和文件名格式
 > echo "/corefile/core-%e-%p-%t" > core_pattern  ( 可以将core文件统一生成到/corefile目录下，产生的文件名为core-命令名-pid-时间戳) 
 
 ```
