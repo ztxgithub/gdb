@@ -66,7 +66,8 @@
 > program 为带调试信息的可执行程序
 
 - gdb program core
-> core是程序core dump(异常错误)后产生的文件。
+> core是程序core dump(异常错误)后产生的文件,program可执行文件和core一定要一一对应,即是可执行文件program
+产生core文件.
 
 - gdb program PID
 > 调试已运行的程序
@@ -77,6 +78,17 @@
 > -se file  从指定文件中读取符号表并将它使用在可执行文件中  
 > -c file == -core file 使用该文件作为 core dump   
 > -directory directory == -d directory  加入一个源文件的搜索路径。默认搜索路径是环境变量中PATH所定义的路径  
+
+## 问题解决
+
+- 如果在gdb中出现??()
+
+```shell
+    1.考虑是否加 -g 
+    2. # gdb --quiet -nx --readnever /proc/$pid/exe $pid
+       安装对应的依赖软件: # debuginfo-install glibc-2.17-157.el7_3.5.x86_64
+
+```
 
 ## gdb相关操作
 
@@ -192,3 +204,69 @@ Num     Type           Disp Enb Address            What
 - (gdb) path  dir                        <------- 设置程序的运行路径
 
 - (gdb) show paths                       <------- 查看程序的运行路径。
+
+- (gdb) info thread                      <------- 查看线程信息
+
+- (gdb) thread 序号                       <------- 切换到对应的线程 ,序号由 (gdb) info thread 命令获得 或则由 
+                                                   $ pstack pid 获得
+
+### 实例一
+
+```shell
+
+    1.gdb进入已经运行的进程
+        $ gdb ./lock 28150
+        
+    2.查看该进程的线程信息
+        (gdb) info thread 
+        结果:
+             Id   Target Id         Frame 
+              5    Thread 0x7ff36ffec700 (LWP 28151) "lock" __lll_lock_wait ()
+                at ../nptl/sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+              4    Thread 0x7ff36f7eb700 (LWP 28152) "lock" __lll_lock_wait ()
+                at ../nptl/sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+              3    Thread 0x7ff36efea700 (LWP 28153) "lock" 0x00007ff3700ab66d in nanosleep ()
+                at ../sysdeps/unix/syscall-template.S:81
+              2    Thread 0x7ff36e7e9700 (LWP 28154) "lock" 0x00007ff3700ab66d in nanosleep ()
+                at ../sysdeps/unix/syscall-template.S:81
+            * 1    Thread 0x7ff370feb740 (LWP 28150) "lock" 0x00007ff370bd7ef7 in pthread_join (
+                threadid=140683532748544, thread_return=0x0) at pthread_join.c:92
+                
+         其中 LWP 28151 代表线程的唯一码.
+         
+    3.切换到特定的线程
+        (gdb) thread 5
+        
+    4.查看这时线程调用函数栈
+        (gdb) where
+        
+        结果:
+            #0  __lll_lock_wait () at ../nptl/sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+            #1  0x00007ff370bd8d02 in _L_lock_791 () from /lib64/libpthread.so.0
+            #2  0x00007ff370bd8c08 in __GI___pthread_mutex_lock (mutex=0x6020e0 <mutex2>) at pthread_mutex_lock.c:64
+            #3  0x00000000004008ce in func1 () at lock.cpp:18
+            #4  0x0000000000400966 in thread1 (arg=0x0) at lock.cpp:43
+            #5  0x00007ff370bd6dc5 in start_thread (arg=0x7ff36ffec700) at pthread_create.c:308
+            #6  0x00007ff3700e476d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:113
+            
+    5.进入某一个特定的函数栈
+        (gdb) f 3
+        
+        结果:
+            #3  0x00000000004008ce in func1 () at lock.cpp:18
+            18          pthread_mutex_lock(&mutex2); 
+            
+            
+    6.打印相关的变量值
+        (gdb) p mutex2
+        
+        结果:
+            $2 = {__data = {__lock = 2, __count = 0, __owner = 28152, __nusers = 1, __kind = 0, __spins = 0, __list = {
+                  __prev = 0x0, __next = 0x0}}, 
+              __size = "\002\000\000\000\000\000\000\000\370m\000\000\001", '\000' <repeats 26 times>, __align = 2}
+              
+        这里 __owner = 28152 代表 mutex2已经被线程4占用(LWP 28152)
+        
+
+```
+[参考资料](https://www.ibm.com/developerworks/cn/linux/l-cn-deadlock/)
