@@ -269,4 +269,21 @@ Num     Type           Disp Enb Address            What
         
 
 ```
+
+### 实例二
+
+```shell
+    调试死锁问题
+        1. 运行可执行程序
+                > ./sample_test
+                
+        2. 查看 sample_test 的进程号
+                > ps aux | grep "sample_test"
+                
+        3. 运行 gdb 程序,  再 attach 进程号, 再　thread apply all bt
+                结果:
+                    > gdb
+                    (gdb) attach 进程号
+                    (gdb) thread apply all bt
+```
 [参考资料](https://www.ibm.com/developerworks/cn/linux/l-cn-deadlock/)
