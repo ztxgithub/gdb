@@ -161,6 +161,18 @@ Num     Type           Disp Enb Address            What
 
 - (gdb) f n               <------- 根据bt命令确定各个堆栈的序号，可以切换到指定的堆栈(函数中)，frame
 
+### 线程调试
+
+- (gdb) info thread                                  <------- 查看线程信息
+
+- (gdb) thread 序号                                   <------- 切换到对应的线程 ,序号由 (gdb) info thread 命令获得 掉
+                                                               或则由 $ pstack pid 获得
+- (gdb) set scheduler-locking [off|on|step]          <------- 调用多线程程序时, 默认是所有多个线程同时运行, 像只让调试线程
+                                                              运行,　off: 不锁定任何线程, 所有的线程都继续执行
+                                                              on: 只有当前被调试线程会继续执行
+                                                              step: 单步执行时, 只有当前线程会被执行
+                                                   
+
 ### 常用命令
 
 - (gdb) set listsize num         <------- 设置一次显示源代码的行数
@@ -204,11 +216,6 @@ Num     Type           Disp Enb Address            What
 - (gdb) path  dir                        <------- 设置程序的运行路径
 
 - (gdb) show paths                       <------- 查看程序的运行路径。
-
-- (gdb) info thread                      <------- 查看线程信息
-
-- (gdb) thread 序号                       <------- 切换到对应的线程 ,序号由 (gdb) info thread 命令获得 或则由 
-                                                   $ pstack pid 获得
 
 ### 实例一
 
